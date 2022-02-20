@@ -235,8 +235,10 @@ subMat :: Integer -> Integer -> [[a]] -> [[a]]
 subMat col row mat = (delCol col (delRow row mat))
 
 
---det_carry :: (Num a) => a->[[a]]->a
---det_carry 
+det :: (Num a) => [[a]]->a
+det [[x]] = x
+det matrix = foldr1 (+) [(-1)^n*v*(det (subMat n 0 matrix))|(n,v)<-(orderStart 0 (arrEle matrix 0))]
+--det 
 
 arrEle_carry :: Integer->[a]->Integer->a
 arrEle_carry carry (x:arr) target
@@ -247,6 +249,10 @@ arrEle_carry carry (x:arr) target
 arrEle = arrEle_carry 0
 matEle mat row col = (arrEle (arrEle mat row) col)
 
+orderStart :: Integer->[a]->[(Integer,a)]
+orderStart start arr = zip [start..] arr
 
+order :: [a]->[(Integer,a)]
+order arr = (orderStart 1 arr)
 
 --det = det_carry (1)
