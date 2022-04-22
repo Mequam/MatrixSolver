@@ -51,9 +51,20 @@ row :: [[a]]->[a]
 row (arr1:arr) = arr1
 row [] = []
 
+transpose_carry :: [[a]]->[[a]]->[[a]]
+transpose_carry carry [[]] = [rev row | row<-carry]
+transpose_carry carry mat = transpose_carry (appCol carry (row mat)) (skim mat)
+
+transpose :: [[a]]->[[a]]
+transpose x = transpose_carry [[]] x
+
 --return the given matrix without the first array
 skim :: [[a]]->[[a]]
 skim (arr1:arr) = arr
+skim _ = [[]]
+
+
+skimRow = skim
 
 --gets a matrix without the first column
 skimCol :: [[a]]->[[a]]
